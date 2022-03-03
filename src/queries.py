@@ -54,7 +54,6 @@ def count_rows_person(cursor):
 def insert_into_certificates(cursor, cert_name, person_id):
 
     SQL = "INSERT INTO certificates (name,person_id) VALUES ('{}',{})".format(cert_name,person_id)
-    print(SQL)
     cursor.execute(SQL)
 
 def insert_into_person(cursor, nimi, ika, student):
@@ -63,9 +62,19 @@ def insert_into_person(cursor, nimi, ika, student):
     SQL = """INSERT INTO person (name, age, student) VALUES (%s,%s,%s);"""
     data = (nimi,ika,student)
     # SQL = "INSERT INTO person (name, age, student) VALUES ('{}',{},{})".format(nimi, ika, student)
-
-    print(SQL)
     cursor.execute(SQL,data)
+
+def delete_from_person(cursor, id):
+    SQL = "DELETE FROM person WHERE id = (%s);"
+    data = (id,)
+    cursor.execute(SQL,data)
+    print("deleted person id: {}".format(id))
+
+def delete_from_certificates(cursor, id):
+    SQL = "DELETE FROM certificates WHERE id = (%s);"
+    data = (id,)
+    cursor.execute(SQL,data)
+    print("deleted certificate id: {}".format(id))
 
 def connect():
     con = None
@@ -73,13 +82,15 @@ def connect():
         con = psycopg2.connect(**config())
         
         cursor = con.cursor()
-        select_all(cursor)
+        #select_all(cursor)
         # select_column_names(cursor)
         # select_certificate_data(cursor)
         # select_certificate_owners(cursor)
         # count_rows_person(cursor)
         # insert_into_certificates(cursor, "AZ-104", "15")
         # insert_into_person(cursor, "matti", "99", "True")
+        delete_from_person(cursor, "15")
+        # delete_from_certificates(cursor, "15")
         con.commit()
         cursor.close()
         con.close()
