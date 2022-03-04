@@ -1,3 +1,4 @@
 src/data/database.ini
 venv/
 .idea/
+ignore.txt
