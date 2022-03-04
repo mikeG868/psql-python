@@ -58,10 +58,10 @@ def insert_into_certificates(cursor, cert_name, person_id):
 
 def insert_into_person(cursor, nimi, ika, student):
 
+    # SQL = "INSERT INTO person (name, age, student) VALUES ('{}',{},{})".format(nimi, ika, student)
     # SQL = "INSERT INTO person (name, age, student) VALUES (%s,%s,%s);"
     SQL = """INSERT INTO person (name, age, student) VALUES (%s,%s,%s);"""
     data = (nimi,ika,student)
-    # SQL = "INSERT INTO person (name, age, student) VALUES ('{}',{},{})".format(nimi, ika, student)
     cursor.execute(SQL,data)
 
 def delete_from_person(cursor, id):
@@ -77,13 +77,13 @@ def delete_from_certificates(cursor, id):
     print("deleted certificate id: {}".format(id))
 
 def update_person(cursor, newname, id):
-    SQL = "UPDATE person SET name = (%s) where id = (%s);"
+    SQL = "UPDATE person SET name = (%s) WHERE id = (%s);"
     data = (newname,id)
     cursor.execute(SQL,data)
     print("updated person name to {} for id {}".format(newname,id))
 
 def update_certificates(cursor, newname, id):
-    SQL = "UPDATE certificates SET name = (%s) where id = (%s);"
+    SQL = "UPDATE certificates SET name = (%s) WHERE id = (%s);"
     data = (newname,id)
     cursor.execute(SQL,data)
     print("updated certificates name to {} for id {}".format(newname,id))
@@ -93,7 +93,8 @@ def connect():
     try:
         con = psycopg2.connect(**config())
         cursor = con.cursor()
-        #select_all(cursor)
+
+        select_all(cursor)
         # select_column_names(cursor)
         # select_certificate_data(cursor)
         # select_certificate_owners(cursor)
@@ -102,11 +103,13 @@ def connect():
         # insert_into_person(cursor, "matti", "99", "True")
         # delete_from_person(cursor, "18")
         # delete_from_certificates(cursor, "15")
-        update_person(cursor, "mike", 5)
+        # update_person(cursor, "mike", 5)
         # update_certificates(cursor, "AZ-104", 5)
+
         con.commit()
         cursor.close()
         con.close()
+
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:

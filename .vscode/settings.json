@@ -5,10 +5,20 @@
             "server": "localhost",
             "port": 5432,
             "driver": "PostgreSQL",
-            "name": "connection-demo2",
+            "name": "connection-academyDB",
             "password": "TosiSalainen!1",
             "database": "academy",
             "username": "postgres"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "username": "postgres",
+            "name": "connection-blobDB",
+            "database": "blobdb",
+            "password": "TosiSalainen!1"
         }
     ]
 }
